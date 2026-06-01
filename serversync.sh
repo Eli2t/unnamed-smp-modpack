@@ -6,7 +6,7 @@
 #   https://raw.githubusercontent.com/<user>/<repo>/master/pack.toml
 set -euo pipefail
 
-PACK_URL="${PACK_URL:-REPLACE_WITH_RAW_PACK_TOML_URL}"
+PACK_URL="${PACK_URL:-https://raw.githubusercontent.com/Eli2t/unnamed-smp-modpack/main/pack.toml}"
 BOOTSTRAP="packwiz-installer-bootstrap.jar"
 BOOTSTRAP_URL="https://github.com/packwiz/packwiz-installer-bootstrap/releases/latest/download/packwiz-installer-bootstrap.jar"
 
