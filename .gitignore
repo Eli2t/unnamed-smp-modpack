@@ -1,0 +1,13 @@
+# packwiz-installer artifacts (downloaded at runtime, never committed)
+packwiz-installer-bootstrap.jar
+packwiz-installer.jar
+.packwiz-cache/
+packwiz.json
+
+# Anything the installer pulls into a working instance
+mods/*.jar
+mods/*.disabled
+
+# OS / editor cruft
+.DS_Store
+*.swp
