@@ -2,7 +2,10 @@
 # so packwiz-installer never downloads them into instances/servers.
 *.sh
 *.js
+*.txt
 ecosystem.config.js
+client-only.txt
+server-only.txt
 .gitignore
 .gitattributes
 .git/
