@@ -1,0 +1,10 @@
+# Files here are repo tooling, NOT modpack content — keep them out of the index
+# so packwiz-installer never downloads them into instances/servers.
+*.sh
+.gitignore
+.gitattributes
+.git/
+.github/
+README*
+LICENSE*
+packwiz-installer-bootstrap.jar
