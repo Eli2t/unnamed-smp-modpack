@@ -36,17 +36,23 @@ sync_pack() {
   java -jar "$BOOTSTRAP" -g -s server "$PACK_URL"
 }
 
+# Idempotently accept the EULA. Running a server requires agreeing to
+# Mojang's EULA (https://aka.ms/MinecraftEULA); this flips the flag once
+# the file exists so a missed --init can't cause a restart loop.
+ensure_eula() {
+  if [ -f eula.txt ] && grep -q '^eula=false' eula.txt; then
+    sed -i 's/^eula=false/eula=true/' eula.txt
+    echo "[eula] accepted (eula.txt)"
+  fi
+}
+
 if [ "${1:-}" = "--init" ]; then
   echo "[init] building Magma server from scratch in $(pwd)"
   get_magma
   echo "[init] first run: generating server files (self-stops on EULA)..."
   java $JVM_ARGS -jar "$MAGMA_JAR" nogui || true
-  if [ -f eula.txt ]; then
-    sed -i 's/eula=false/eula=true/' eula.txt
-    echo "[init] EULA accepted"
-  else
-    echo "[init] WARNING: eula.txt not generated — check the Magma launcher output above"
-  fi
+  ensure_eula
+  [ -f eula.txt ] || echo "[init] WARNING: eula.txt not generated — check the Magma launcher output above"
   sync_pack
   echo "[init] done. Launch with:  pm2 start ./start.sh --name smp-dev"
   exit 0
@@ -55,5 +61,6 @@ fi
 # --- normal run (pm2 target) --------------------------------------------
 get_magma
 sync_pack
+ensure_eula
 echo "[start] launching Magma"
 exec java $JVM_ARGS -jar "$MAGMA_JAR" nogui
